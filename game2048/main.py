@@ -4,11 +4,13 @@ __author__ = 'gold'
 import pygame
 import pygame.locals
 from pygame.locals import K_LEFT,K_RIGHT,K_DOWN,K_UP,KEYDOWN,K_ESCAPE
-from common.common import chooseExit
+from common.common import chooseExit,chooseSaveGame,chooseFile
 import sys
+import win32api,win32con
 
 from game2048.merge import getNewMatrix,setMatrix,leftMerge,rightMerge,bottomMerge,topMerge,\
     win,lose,getState,not_over
+from game2048.files import saveMatrix,chooseSavedMatrix,readMatrix
 
 SIZE = 500 #the size of the whole panel of the game(not include the edge)
 GRID_LEN = 4
@@ -71,7 +73,8 @@ def runGame(matrix):
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     value = chooseExit()
-                    if value != 0:
+                    if value == 6:
+                        chooseSaveGame(matrix,saveMatrix)
                         pygame.quit()
                         sys.exit()
                     else:
@@ -99,12 +102,27 @@ def runGame(matrix):
                     pygame.quit()
                     sys.exit()
 
-
 def main():
     global DISPLAYSURF
-    matrix = getNewMatrix(GRID_LEN) #the matrix to represent the num on the panel
-    setMatrix(matrix)
-    setMatrix(matrix)
+    matrix = None
+    while True:
+        choice = chooseSavedMatrix()
+        if choice == 6:
+            file = chooseFile()
+            if not file:
+                win32api.MessageBox(0,'file error','wrong',win32con.MB_OK)
+                continue
+            matrix = readMatrix(file)
+            if not matrix:
+                win32api.MessageBox(0, 'file error', 'wrong', win32con.MB_OK)
+            else:
+                break
+        else:
+            break
+    if not matrix:
+        matrix = getNewMatrix(GRID_LEN)  #the matrix to represent the num on the panel
+        setMatrix(matrix)
+        setMatrix(matrix)
     pygame.init()
     DISPLAYSURF = pygame.display.set_mode((SIZE,SIZE))
     pygame.display.set_caption('2048')
