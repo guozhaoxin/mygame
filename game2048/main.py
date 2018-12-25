@@ -4,39 +4,72 @@ __author__ = 'gold'
 import pygame
 import pygame.locals
 from pygame.locals import K_LEFT,K_RIGHT,K_DOWN,K_UP,KEYDOWN,K_ESCAPE
-from common.common import chooseExit,chooseSaveGame,chooseFile
 import sys
 import win32api,win32con
 
 from game2048.merge import getNewMatrix,setMatrix,leftMerge,rightMerge,bottomMerge,topMerge,\
     win,lose,getState,not_over
 from game2048.files import saveMatrix,chooseSavedMatrix,readMatrix
+from common.common import chooseExit,chooseSaveGame,chooseFile
 
-SIZE = 500 #the size of the whole panel of the game(not include the edge)
-GRID_LEN = 4
-LINE_SIZE = 5
-GREEN = (0, 255, 0)
+SIZE = 500 #the size of the whole panel of the game(not include the surrounding edges)
+GRID_LEN = 4 #the row and col count of the square
+LINE_SIZE = 5 #the border width of every square
 
 BACKGROUND_COLOR_GAME = (146, 135, 112) #the background color of the main panel
 BACKGROUND_COLOR_CELL_EMPTY = (158, 148, 138) #the color of the empty cell
-BACKGROUND_COLOR_DICT = {   0:(171, 202, 188),2:(238, 228, 218), 4:(237, 224, 200), 8:(242, 177, 121), 16:(245, 149, 99), \
-                            32:(246, 124, 95), 64:(246, 94, 59), 128:(237, 207, 114), 256:(237, 204, 97), \
-                            512:(237, 200, 80), 1024:(237, 197, 63), 2048:(237, 194, 46) }
-CELL_NUM_COLOR = { 2:(137, 194, 46), 4:(237, 197, 63), 8:(37, 240, 80), 16:(237, 254, 197), \
-                    32:(7, 207, 114), 64:(59, 94, 246), 128:(246, 124, 95), 256:(245, 149, 99), \
-                    512:(242, 177, 121), 1024:(237, 224, 200), 2048:(238, 228, 218) }
-font = 'freesansbold.ttf'
-font_size = 40
+BACKGROUND_COLOR_DICT = {
+    0:(171, 202, 188),
+    2:(238, 228, 218),
+    4:(237, 224, 200),
+    8:(242, 177, 121),
+    16:(245, 149, 99),
+    32:(246, 124, 95),
+    64:(246, 94, 59),
+    128:(237, 207, 114),
+    256:(237, 204, 97),
+    512:(237, 200, 80),
+    1024:(237, 197, 63),
+    2048:(237, 194, 46)
+} #this dict is used to assign every square a different color according their value
 
-win_lose_font = 'arial'
-win_lose_size = 80
-win_lose_color = (158, 148, 138)
+CELL_NUM_COLOR = {
+    2:(137, 194, 46),
+    4:(237, 197, 63),
+    8:(37, 240, 80),
+    16:(237, 254, 197),
+    32:(7, 207, 114),
+    64:(59, 94, 246),
+    128:(246, 124, 95),
+    256:(245, 149, 99),
+    512:(242, 177, 121),
+    1024:(237, 224, 200),
+    2048:(238, 228, 218)
+} #this dict is used assign every num(more than 0) a differen color,so they can be distinguished from their
+  #square and the main panel and other num.
+font = 'freesansbold.ttf' #this is the font of the number
+font_size = 40 #this is the size of the number
+
+win_lose_font = 'arial' #this is the win or lose str font at the end of the game
+win_lose_size = 80 #the win or lose str size on the panel
+win_lose_color = (158, 148, 138) #the color of the win or lose str on the panel
+
+
 def drawPanel(matrix):
-    DISPLAYSURF.fill(BACKGROUND_COLOR_GAME) #draw the background
-    lengthen = SIZE // GRID_LEN
+    '''
+    this function is used to draw the main panel according the matrix
+    this function will scan the matrix which is n * n matrix containing num power of 2 and 0,
+    then according to the value it meet,it draw the num square on corresponding row and col position.
+    :param matrix: [[int,],],a matrix size of n * n,and nums in this matrix are all power of 2 or 0.
+    :return:None
+    '''
+    DISPLAYSURF.fill(BACKGROUND_COLOR_GAME) #fill the main panel,every graph is drawn on the panel
+    lengthen = SIZE // GRID_LEN #get the size of every square(including the edges of the square),
+                                #we can store the value in a fixed variable avoiding repetitive calculation.
+
     for row in range(len(matrix)):
         for col in range(len(matrix)):
-            color = BACKGROUND_COLOR_DICT[matrix[row][col]] #get the rect color
+            color = BACKGROUND_COLOR_DICT[matrix[row][col]] #get the rect color according to corresponding value in the matrix
             x = lengthen * col
             y = lengthen * row
             pygame.draw.rect(DISPLAYSURF,color,(x + LINE_SIZE,y + LINE_SIZE,lengthen - 2 * LINE_SIZE,lengthen - 2 * LINE_SIZE))

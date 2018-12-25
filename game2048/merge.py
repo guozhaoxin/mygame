@@ -44,7 +44,7 @@ def setMatrix(matrix):
     matrix[x][y] = 2
 
 
-def getState(matrix):
+def getState(matrix,point = 2048):
     '''
     get the state of the game now
     :param matrix: [[int],]，the num matrix of the game
@@ -54,7 +54,7 @@ def getState(matrix):
     '''
     for row in range(len(matrix)):
         for col in range(len(matrix)):
-            if matrix[row][col] == 256:
+            if matrix[row][col] == point:
                 return win
             if matrix[row][col] == 0:
                 return not_over
