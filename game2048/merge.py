@@ -30,20 +30,6 @@ def getNewMatrix(n = 4):
     '''
     return [[0] * n for _ in range(n)]
 
-def setMatrix(matrix):
-    '''
-    set the value of a random position of the matrix to 2
-    :param matrix: [[int],],represent the matrix of the game
-    :return:
-    '''
-    x = random.randint(0,len(matrix) - 1)
-    y = random.randint(0,len(matrix) - 1)
-    while matrix[x][y] != 0:
-        x = random.randint(0,len(matrix) - 1)
-        y = random.randint(0,len(matrix) - 1)
-    matrix[x][y] = 2
-
-
 def getState(matrix,point = 2048):
     '''
     get the state of the game now

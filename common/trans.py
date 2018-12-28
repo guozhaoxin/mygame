@@ -1,7 +1,12 @@
 #encoding:utf8
 __author__ = 'gold'
 
-def trans(s):
+def str2colorTuple(s):
+    '''
+    this func is used to translate a str into a 3-int(0 - 255) tuple to represent a kind of color
+    :param s: str,
+    :return: tuple,if s is a valid str to represent a kind of color;else None
+    '''
     if not s:
         return
     if s[0] == '"' or s[0] == "'":
@@ -19,4 +24,4 @@ def trans(s):
         return
 
 if __name__ == '__main__':
-    print(trans('fsdsf'))
+    print(str2colorTuple('#912CEE'))
