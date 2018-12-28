@@ -1,6 +1,8 @@
 #encoding:utf8
 __author__ = 'gold'
 
+'''this file is used to interactive with files,such as read game and save game'''
+
 import time
 import os
 import win32api,win32con
