@@ -9,7 +9,6 @@ from pygame.locals import *
 import time
 import math
 from threading import Thread
-import threading
 import win32api,win32con
 
 
@@ -320,7 +319,7 @@ def changeAppleState():
 def musicCapturePlay():
     if pygame.mixer.music.get_busy():
         pygame.mixer.music.stop()
-    pygame.mixer.music.load('../musics/卡通.mp3')
+    pygame.mixer.music.load('./musics/卡通.mp3')
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy():
         pygame.time.delay(100)
@@ -328,7 +327,7 @@ def musicCapturePlay():
 def musicOver():
     if pygame.mixer.music.get_busy():
         pygame.mixer.music.stop()
-    pygame.mixer.music.load('../musics/回答正确与否.mp3')
+    pygame.mixer.music.load('./musics/回答正确与否.mp3')
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy():
         pygame.time.delay(100)
@@ -357,7 +356,7 @@ def main():
     appleStateThread.start()
 
     while True:
-        pygame.event.get()
+        pygame.event.get() 
         runGame()
         Thread(target=musicOver).start()
         gameState = 'S'
