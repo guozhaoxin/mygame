@@ -12,7 +12,6 @@ class Home(pygame.sprite.Sprite):
 		self.homes = ['./images/home/home1.png', './images/home/home2.png', './images/home/home_destroyed.png']
 		self.home = pygame.image.load(self.homes[0])
 		self.rect = self.home.get_rect()
-		print(self.rect.size)
 		self.rect.left, self.rect.top = (3 + 12 * 24, 3 + 24 * 24)
 		self.alive = True
 	# 大本营置为摧毁状态

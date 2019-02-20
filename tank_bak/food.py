@@ -51,7 +51,9 @@ class Food(pygame.sprite.Sprite):
 		generate the food
 		:return:
 		'''
-		self.kind = random.randint(0, len(self.foods) + 1)
+		self.kind = random.randint(0, len(self.foods) - 1)
+		print(self.kind)
+		print(self.foods)
 		self.food = pygame.image.load(self.foods[self.kind]).convert_alpha()
 		self.rect = self.food.get_rect()
 		self.rect.left, self.rect.top = random.randint(x_start, x_end), random.randint(y_start, y_end)
