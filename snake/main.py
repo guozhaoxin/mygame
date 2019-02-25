@@ -9,7 +9,7 @@ from pygame.locals import *
 import time
 import math
 from threading import Thread
-import win32api,win32con
+from common.common import init,chooseExit,exitGame
 
 
 wormCoords = None
@@ -76,13 +76,12 @@ def showStartScreen():
 def terminate():
     global gameState,DISPLAYSURF
     gameState = 'P'
-    choice = win32api.MessageBox(0, "确定退出游戏？", "退出",win32con.MB_YESNO)
-    if choice == 7:
+    choice = chooseExit()
+    if not choice :
         gameState = 'R'
         return
     gameState = 'S'
-    pygame.quit()
-    sys.exit()
+    exitGame()
 
 def getRandomLocation(wormCoords):
     while True:
@@ -277,6 +276,8 @@ def changeFPS():
     startLengthen = 0
     step = 0
     while True:
+        time.sleep(.05)
+        print("in fps")
         if gameState == 'R' and wormCoords:
             nowLengthen = len(wormCoords) - 3
             if nowLengthen != startLengthen:
@@ -296,6 +297,7 @@ def countTime():
     global gameState,runningTime
     startTime = time.time()
     while True:
+        print('in count')
         if gameState == 'R':
             runningTime += time.time() - startTime
             startTime = time.time()
@@ -309,6 +311,7 @@ def countTime():
 def changeAppleState():
     global appleState,gameState
     while True:
+        print('in change')
         if gameState == 'R':
             appleState = not appleState
         if appleState:
@@ -325,18 +328,20 @@ def musicCapturePlay():
         pygame.time.delay(100)
 
 def musicOver():
+    print('hahaha ')
     if pygame.mixer.music.get_busy():
         pygame.mixer.music.stop()
     pygame.mixer.music.load('./musics/回答正确与否.mp3')
     pygame.mixer.music.play()
+    print('what')
     while pygame.mixer.music.get_busy():
+        print('in music over')
         pygame.time.delay(100)
+    print('over')
 
 
 def main():
     global  FPSCLOCK,DISPLAYSURF,BASICFONT,gameState
-    pygame.init()
-    pygame.mixer.init()
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH,WINDOWHEIGHT))
     DISPLAYSURF.get_locked()
@@ -363,4 +368,5 @@ def main():
         showGameOverScreen()
 
 if __name__ == '__main__':
+    init()
     main()
