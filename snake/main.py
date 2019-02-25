@@ -294,6 +294,7 @@ def changeFPS():
             continue
 
 
+
 def countTime():
     global gameState,runningTime
     startTime = time.time()
