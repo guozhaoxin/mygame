@@ -293,6 +293,7 @@ def changeFPS():
         elif gameState == 'P':
             continue
 
+
 def countTime():
     global gameState,runningTime
     startTime = time.time()
