@@ -4,7 +4,7 @@ __date__ = '2019/2/3'
 __time__ = '18:36'
 __filename__ = 'main.py'
 
-import random,pygame,sys
+import random,pygame
 from pygame.locals import *
 import time
 import math
@@ -13,7 +13,7 @@ from common.common import init,chooseExit,exitGame
 
 
 wormCoords = None
-gameState = 'S'
+gameState = 'S' # 'S':stoped,'R':running,'P':paused
 appleState = True
 speedBase = 8
 FPS = speedBase
