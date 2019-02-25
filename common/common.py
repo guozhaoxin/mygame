@@ -7,14 +7,6 @@ from tkinter import filedialog,messagebox
 import pygame
 import sys
 
-# def chooseExit():
-#     '''
-#     show the choosen box to decide if exit the game or not
-#     :return:int,1: never exit;
-#                 0: exit
-#     '''
-#     choice = win32api.MessageBox(0, "close the game?", "close game",win32con.MB_YESNO)
-#     return choice - 6
 
 def chooseFile():
     '''
@@ -28,17 +20,6 @@ def chooseFile():
         return file_path
     return
 
-# def chooseSaveGame(data,method):
-#     '''
-#     the player decides to save the game or not
-#     :param data: [[int],],
-#     :param method:a callable object, a function to save the game,it needs a param to save
-#     :return:
-#     '''
-#     choice = win32api.MessageBox(0, "save the game?", "save game",win32con.MB_YESNO)
-#     if choice == 6:
-#         method(data)
-#         win32api.MessageBox(0,'success to save','info',win32con.MB_OK)
 
 def exitGame():
     '''
@@ -87,7 +68,7 @@ def importGameData(readMethod):
             break
     return data
 
-def prepare():
+def init():
     '''
     this method is used to execute some initial for every game at the beginning.
     :return:

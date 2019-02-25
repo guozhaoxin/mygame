@@ -5,7 +5,6 @@ __author__ = 'gold'
 
 import time
 import os
-# import win32api,win32con
 
 gamesParDoc =  './' + 'SavedGames/' # this is the ralative document to save all saved-games files.
 numSet = set([2 ** i for i in range(1,12)] + [0]) # this set contains values that only can be accepted in this game,

@@ -14,7 +14,7 @@ from pygame.locals import K_LEFT,K_RIGHT,K_DOWN,K_UP,KEYDOWN,K_ESCAPE
 from game2048.merge import getNewMatrix,leftMerge,rightMerge,bottomMerge,topMerge,\
     getState,not_over,random2
 from game2048.files import saveMatrix,readMatrix
-from common.common import chooseExit,exitGame,importGameData,saveGame,prepare
+from common.common import chooseExit,exitGame,importGameData,saveGame,init
 
 SIZE = 500  # the size of the whole panel of the game(not include the surrounding edges)
 GRID_LEN = 4  # the row and col count of the square
@@ -206,5 +206,5 @@ def main():
 
 
 if __name__ == '__main__':
-    prepare()
+    init()
     main()
