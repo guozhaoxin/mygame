@@ -5,7 +5,7 @@ __author__ = 'gold'
 
 import time
 import os
-import win32api,win32con
+# import win32api,win32con
 
 gamesParDoc =  './' + 'SavedGames/' # this is the ralative document to save all saved-games files.
 numSet = set([2 ** i for i in range(1,12)] + [0]) # this set contains values that only can be accepted in this game,
@@ -89,14 +89,14 @@ def readMatrix(file):
     except:
         return None
 
-def chooseSavedMatrix():
-    '''
-    this function is used to let the player decide if save the game or not
-    :return: int, 0: save
-                  1: never save
-    '''
-    choice = win32api.MessageBox(0, "choose an old game?", "choose game", win32con.MB_YESNO)
-    return choice - 6
+# def chooseSavedMatrix():
+#     '''
+#     this function is used to let the player decide if save the game or not
+#     :return: int, 0: save
+#                   1: never save
+#     '''
+#     choice = win32api.MessageBox(0, "choose an old game?", "choose game", win32con.MB_YESNO)
+#     return choice - 6
 
 
 if __name__ == '__main__':

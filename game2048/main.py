@@ -9,12 +9,12 @@ sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 import pygame
 from pygame.locals import K_LEFT,K_RIGHT,K_DOWN,K_UP,KEYDOWN,K_ESCAPE
-import win32api,win32con
+# import win32api,win32con
 
 from game2048.merge import getNewMatrix,leftMerge,rightMerge,bottomMerge,topMerge,\
     getState,not_over,random2
-from game2048.files import saveMatrix,chooseSavedMatrix,readMatrix
-from common.common import chooseExit,chooseSaveGame,chooseFile,exitGame
+from game2048.files import saveMatrix,readMatrix
+from common.common import chooseExit,exitGame,importGameData,saveGame,prepare
 
 SIZE = 500  # the size of the whole panel of the game(not include the surrounding edges)
 GRID_LEN = 4  # the row and col count of the square
@@ -163,14 +163,14 @@ def runGame(matrix):
     while True:
         for event in pygame.event.get():
             if event.type == pygame.locals.QUIT:
-                value = chooseExit()
-                if value == 0:
+                exitChoose = chooseExit()
+                if exitChoose:
                     exitGame()
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    value = chooseExit()
-                    if value == 0:
-                        chooseSaveGame(matrix,saveMatrix)
+                    exitChoose = chooseExit()
+                    if exitChoose:
+                        saveGame(matrix,saveMatrix)
                         exitGame()
                     else:
                         continue
@@ -193,21 +193,7 @@ def main():
     :return:
     '''
     global DISPLAYSURF
-    matrix = None
-    while True:
-        choice = chooseSavedMatrix()
-        if choice == 0:
-            file = chooseFile()
-            if not file:
-                win32api.MessageBox(0,'file error','wrong',win32con.MB_OK)
-                continue
-            matrix = readMatrix(file)
-            if not matrix:
-                win32api.MessageBox(0, 'file error', 'wrong', win32con.MB_OK)
-            else:
-                break
-        else:
-            break
+    matrix = importGameData(readMatrix)
     if not matrix:
         matrix = getNewMatrix(GRID_LEN)  #the matrix to represent the num on the panel
         random2(matrix)
@@ -220,4 +206,5 @@ def main():
 
 
 if __name__ == '__main__':
+    prepare()
     main()
